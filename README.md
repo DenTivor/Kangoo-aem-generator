@@ -1,4 +1,4 @@
-Yeoman `scotchmean` generator
+Yeoman `kangoo` generator
 =======================
 
 This is a Yeoman custom generator for generating simple AEM module.
