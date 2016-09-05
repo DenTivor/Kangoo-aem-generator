@@ -59,6 +59,11 @@ module.exports = yeoman.generators.Base.extend({
         this.destinationPath(this.props.variableName + '/dialog.xml'), this.props
       );
 
+      this.fs.copyTpl(
+        this.templatePath('_content.xml'),
+        this.destinationPath(this.props.variableName + '/.content.xml'), this.props
+      );
+
 
       this.fs.copyTpl(
         this.templatePath('_cmp_markup.html'),
@@ -144,7 +149,7 @@ module.exports = yeoman.generators.Base.extend({
     
     //Install Dependencies
     install: function() {
-      this.installDependencies();
+      // this.installDependencies();
     }
   },
 });

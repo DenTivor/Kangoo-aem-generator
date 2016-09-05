@@ -2,4 +2,6 @@
 // Entry point: Don't change!
 // =========================================================== 
 
-var <%= jsVarsName%>InitImpl = new <%= jsVarsName%>Init();
+$(document).ready(function () {
+	var <%= jsVarsName%>InitImpl = new <%= jsVarsName%>Init();
+})
