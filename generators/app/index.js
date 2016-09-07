@@ -12,45 +12,61 @@ module.exports = yeoman.generators.Base.extend({
     //Ask for user input
     prompting: function() {
       var done = this.async();
-      this.prompt({
-        type: 'input',
-        name: 'name',
-        message: 'Your project name',
-        //Defaults to the project's folder name if the input is skipped
-        default: this.appname
-      }, function(answers) {
-        this.props = answers
+ 
+        // have Yeoman greet the user
+        console.log(this.yeoman);
+ 
+        var prompts = [{
+            type: 'input',
+            name: 'name',
+            message: 'Your project name',
+            //Defaults to the project's folder name if the input is skipped
+            default: this.appname
+        },{
+            type: 'confirm',
+            name: 'addDemoSection',
+            message: 'Would you like to generate a demo section ?',
+            default: true
+        },
+        {
+            type: 'checkbox',
+            message: 'Select elements for module',
+            name: 'cmppakage',
+            choices: [
+              {
+                name: 'Dialog'
+              },
+              {
+                name: 'Css'
+              },
+              {
+                name: 'JS scripts'
+              },
+              {
+                name: 'Parsys',
+                disabled: 'To be in future'
+              }
+            ]
+          }
 
-        this.props.variableName = this.props.name;
-        this.props.jsVarsName = nameResolver.toCamel(this.props.name);// someProject
-        this.props.humanReadableName = nameResolver.toHumanReadableName(this.props.name);// some project
-        this.props.varUnderName = nameResolver.toLowerUnderscore(this.props.name);//some_project
+
+        ];
+ 
+        this.prompt(prompts, function (answers) {
+            this.props = answers;
+
+            this.props.variableName = this.props.name;
+            this.props.jsVarsName = nameResolver.toCamel(this.props.name);// someProject
+            this.props.humanReadableName = nameResolver.toHumanReadableName(this.props.name);// some project
+            this.props.varUnderName = nameResolver.toLowerUnderscore(this.props.name);//some_project
 
 
-        this.log(answers.name);
-        done();
-      }.bind(this));
+            this.log(answers.cmppakage);
+            done();
+        }.bind(this));
     },
+
     
-    //Copy the configuration files
-    // config: function () {
-    //         this.fs.copyTpl(
-    //             this.templatePath('_package.json'),
-    //             this.destinationPath('package.json'), {
-    //                 name: this.props.name
-    //             }
-    //         );
-    //         this.fs.copyTpl(
-    //             this.templatePath('_bower.json'),
-    //             this.destinationPath('bower.json'), {
-    //                 name: this.props.name
-    //             }
-    //         );
-    //         this.fs.copy(
-    //           this.templatePath('bowerrc'),
-    //           this.destinationPath('.bowerrc')
-    //         );
-    //     },
 
     //Copy application files
     app: function() {
