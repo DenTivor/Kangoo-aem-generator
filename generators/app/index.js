@@ -4,6 +4,7 @@ var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var yosay = require('yosay');
 var nameResolver = require('./utils/name-resolver');
+var _ = require('lodash');
 
 
 module.exports = yeoman.generators.Base.extend({
@@ -22,11 +23,6 @@ module.exports = yeoman.generators.Base.extend({
             message: 'Your project name',
             //Defaults to the project's folder name if the input is skipped
             default: this.appname
-        },{
-            type: 'confirm',
-            name: 'addDemoSection',
-            message: 'Would you like to generate a demo section ?',
-            default: true
         },
         {
             type: 'checkbox',
@@ -34,16 +30,16 @@ module.exports = yeoman.generators.Base.extend({
             name: 'cmppakage',
             choices: [
               {
-                name: 'Dialog'
+                name: 'dialog'
               },
               {
-                name: 'Css'
+                name: 'css'
               },
               {
-                name: 'JS scripts'
+                name: 'javascripts'
               },
               {
-                name: 'Parsys',
+                name: 'parsys',
                 disabled: 'To be in future'
               }
             ]
@@ -60,8 +56,21 @@ module.exports = yeoman.generators.Base.extend({
             this.props.humanReadableName = nameResolver.toHumanReadableName(this.props.name);// some project
             this.props.varUnderName = nameResolver.toLowerUnderscore(this.props.name);//some_project
 
+            this.props.dialog = true;
+            this.props.css = true;
+            this.props.javascripts = true;
+            this.props.parsys = true;
 
-            this.log(answers.cmppakage);
+            if (!(_.includes(answers.cmppakage, 'dialog'))) {this.props.dialog = false}
+            if (!(_.includes(answers.cmppakage, 'css'))) {this.props.css = false}
+            if (!(_.includes(answers.cmppakage, 'javascripts'))) {this.props.javascripts = false}
+            if (!(_.includes(answers.cmppakage, 'parsys'))) {this.props.parsys = false}
+
+            this.log("this.props.dialog      -- " + this.props.dialog);
+            this.log("this.props.css         -- " + this.props.css);
+            this.log("this.props.javascripts -- " + this.props.javascripts);
+            this.log("this.props.parsys      -- " + this.props.parsys);
+            // this.log(_a);
             done();
         }.bind(this));
     },
@@ -70,97 +79,72 @@ module.exports = yeoman.generators.Base.extend({
 
     //Copy application files
     app: function() {
-      this.fs.copyTpl(
-        this.templatePath('_dialog.xml'),
-        this.destinationPath(this.props.variableName + '/dialog.xml'), this.props
-      );
+      if (this.props.dialog) {
+        this.fs.copyTpl(
+          this.templatePath('_dialog.xml'),
+          this.destinationPath(this.props.variableName + '/dialog.xml'), this.props
+        );
+      }
+
+      if (this.props.css) {
+        this.fs.copyTpl(
+          this.templatePath('clientlibs/_css.txt'),
+          this.destinationPath(this.props.variableName + '/clientlibs/css.txt'), this.props
+        );
+
+        this.fs.copyTpl(
+          this.templatePath('clientlibs/css/_cmp_styles-main.css'),
+          this.destinationPath(this.props.variableName + '/clientlibs/css/' + this.props.name + '-main.css'), this.props
+        );
+      }
+
+      if (this.props.javascripts) {
+        this.fs.copyTpl(
+          this.templatePath('clientlibs/_js.txt'),
+          this.destinationPath(this.props.variableName + '/clientlibs/js.txt'), this.props
+        );
+
+
+        this.fs.copyTpl(
+          this.templatePath('clientlibs/js/_cmp_js-preinit.js'),
+          this.destinationPath(this.props.variableName + '/clientlibs/js/' + this.props.name + '-preinit.js'), this.props
+        );
+
+        this.fs.copyTpl(
+          this.templatePath('clientlibs/js/_cmp_js-init.js'),
+          this.destinationPath(this.props.variableName + '/clientlibs/js/' + this.props.name + '-init.js'), this.props
+        );
+
+        this.fs.copyTpl(
+          this.templatePath('clientlibs/js/_cmp_js-controller.js'),
+          this.destinationPath(this.props.variableName + '/clientlibs/js/' + this.props.name + '-controller.js'), this.props
+        );
+      }
+
+      if (this.props.css || this.props.javascripts) {
+        this.fs.copyTpl(
+          this.templatePath('clientlibs/.content.xml'),
+          this.destinationPath(this.props.variableName + '/clientlibs/.content.xml'), this.props
+        );
+      }
+
+      if (!this.props.dialog) {
+        this.fs.copyTpl(
+          this.templatePath('_cmp_markup-without-dialog.html'),
+          this.destinationPath(this.props.variableName + "/" + this.props.name + '.html'), this.props
+        );
+      } else {
+        this.fs.copyTpl(
+          this.templatePath('_cmp_markup.html'),
+          this.destinationPath(this.props.variableName + "/" + this.props.name + '.html'), this.props
+        );
+      }
+
 
       this.fs.copyTpl(
         this.templatePath('_content.xml'),
         this.destinationPath(this.props.variableName + '/.content.xml'), this.props
       );
-
-
-      this.fs.copyTpl(
-        this.templatePath('_cmp_markup.html'),
-        this.destinationPath(this.props.variableName + "/" + this.props.name + '.html'), this.props
-      );
-
-      this.fs.copyTpl(
-        this.templatePath('clientlibs/.content.xml'),
-        this.destinationPath(this.props.variableName + '/clientlibs/.content.xml'), this.props
-      );
-
-      this.fs.copyTpl(
-        this.templatePath('clientlibs/_js.txt'),
-        this.destinationPath(this.props.variableName + '/clientlibs/js.txt'), this.props
-      );
-
-      this.fs.copyTpl(
-        this.templatePath('clientlibs/_css.txt'),
-        this.destinationPath(this.props.variableName + '/clientlibs/css.txt'), this.props
-      );
-
-      this.fs.copyTpl(
-        this.templatePath('clientlibs/js/_cmp_js-preinit.js'),
-        this.destinationPath(this.props.variableName + '/clientlibs/js/' + this.props.name + '-preinit.js'), this.props
-      );
-
-      this.fs.copyTpl(
-        this.templatePath('clientlibs/js/_cmp_js-init.js'),
-        this.destinationPath(this.props.variableName + '/clientlibs/js/' + this.props.name + '-init.js'), this.props
-      );
-
-      this.fs.copyTpl(
-        this.templatePath('clientlibs/js/_cmp_js-controller.js'),
-        this.destinationPath(this.props.variableName + '/clientlibs/js/' + this.props.name + '-controller.js'), this.props
-      );
-
-      this.fs.copyTpl(
-        this.templatePath('clientlibs/css/_cmp_styles-main.css'),
-        this.destinationPath(this.props.variableName + '/clientlibs/css/' + this.props.name + '-main.css'), this.props
-      );
-
-
-
-
-
-    //   //Server file
-    //   this.fs.copyTpl(
-    //     this.templatePath('_server.js'),
-    //     this.destinationPath('server.js'),
-    //     this.destinationPath('/views/index.ejs'), {
-    //       name: this.props.name
-    //     }
-    //   );
-    //   /////Routes
-    //   this.fs.copy(
-    //     this.templatePath('_routes/_all.js'),
-    //     this.destinationPath('routes/all.js'));
-
-
-    //   // Model
-    //   this.fs.copy(
-    //     this.templatePath('_model/_todo.js'),
-    //     this.destinationPath('model/todo.js'));
-
-    //   // Views
-    //   this.fs.copyTpl(
-    //     this.templatePath('_views/_index.ejs'),
-    //     this.destinationPath('/views/index.ejs'), {
-    //       name: this.props.name
-    //     }
-    //   );
-
-    //   // Public/
-    //   this.fs.copy(
-    //     this.templatePath('_public/_css/_app.css'),
-    //     this.destinationPath('public/css/app.css')
-    //   );
-    //   this.fs.copy(
-    //     this.templatePath('_public/_js/_app.js'),
-    //     this.destinationPath('public/js/app.js')
-    //   );
     },
     
     //Install Dependencies
