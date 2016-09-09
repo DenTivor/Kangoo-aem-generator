@@ -43,6 +43,25 @@ module.exports = yeoman.generators.Base.extend({
                 disabled: 'To be in future'
               }
             ]
+          },
+          {
+            type: 'list',
+            message: 'Select element group',
+            name: 'cmpgroup',
+            choices: [
+              {
+                name: 'general',
+                value: 'Elbrus general components'
+              },
+              {
+                name: 'grid',
+                value: 'Elbrus grid components'
+              },
+              {
+                name: 'forms',
+                value: 'Elbrus forms components'
+              }
+            ]
           }
 
 
@@ -52,8 +71,9 @@ module.exports = yeoman.generators.Base.extend({
             this.props = answers;
 
             this.props.variableName = this.props.name;
+            this.props.groupName = this.props.cmpgroup;
             this.props.jsVarsName = nameResolver.toCamel(this.props.name);// someProject
-            this.props.humanReadableName = nameResolver.toHumanReadableName(this.props.name);// some project
+            this.props.humanReadableName = _.capitalize(nameResolver.toHumanReadableName(this.props.name));// Some project
             this.props.varUnderName = nameResolver.toLowerUnderscore(this.props.name);//some_project
 
             this.props.dialog = true;

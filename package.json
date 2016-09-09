@@ -1,14 +1,14 @@
 {
   "name": "generator-kangoo",
-  "version": "0.0.0",
-  "description": "Yeoman generator",
+  "version": "0.0.1",
+  "description": "Kangoo AEM generator",
   "license": "MIT",
   "main": "app/index.js",
-  "repository": "christiannwamba/generator-kangoo",
+  "repository": "DenTivor/Kangoo-aem-generator",
   "author": {
     "name": "",
     "email": "",
-    "url": "https://github.com/christiannwamba"
+    "url": "https://github.com/DenTivor/Kangoo-aem-generator/"
   },
   "scripts": {
     "test": "mocha"
