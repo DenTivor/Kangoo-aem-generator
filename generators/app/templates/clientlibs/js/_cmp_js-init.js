@@ -3,10 +3,20 @@ var <%= jsVarsName%>Init = (function () {
 		// Your code here!!!
 
 		var settings = {
-			elSelector: ".<%= variableName%>"
+			elSelector: ".<%= variableName%>[element-id='<%= variableName%>']"
 		};
 
-		var cmpController = new <%= jsVarsName%>Controller(settings);
+		var elements = $(settings.elSelector);
+        
+		_.each(elements, function(element, key) {
+			var elementSettings = {};
+			var el = $(element);
+
+			elementSettings.el = el;
+
+			_.extend(elementSettings, settings);
+			new multTestController(elementSettings);
+		});
 
 		// //Your code here!!!
 	}
