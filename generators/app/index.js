@@ -104,6 +104,11 @@ module.exports = yeoman.generators.Base.extend({
           this.templatePath('_dialog.xml'),
           this.destinationPath(this.props.variableName + '/dialog.xml'), this.props
         );
+
+        this.fs.copyTpl(
+          this.templatePath('_cq_dialog/.content.xml'),
+          this.destinationPath(this.props.variableName + "/_cq_dialog/.content.xml"), this.props
+        );
       }
 
       if (this.props.css) {
