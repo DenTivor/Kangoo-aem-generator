@@ -85,11 +85,6 @@ module.exports = yeoman.generators.Base.extend({
             if (!(_.includes(answers.cmppakage, 'css'))) {this.props.css = false}
             if (!(_.includes(answers.cmppakage, 'javascripts'))) {this.props.javascripts = false}
             if (!(_.includes(answers.cmppakage, 'parsys'))) {this.props.parsys = false}
-
-            this.log("this.props.dialog      -- " + this.props.dialog);
-            this.log("this.props.css         -- " + this.props.css);
-            this.log("this.props.javascripts -- " + this.props.javascripts);
-            this.log("this.props.parsys      -- " + this.props.parsys);
             // this.log(_a);
             done();
         }.bind(this));
@@ -99,6 +94,13 @@ module.exports = yeoman.generators.Base.extend({
 
     //Copy application files
     app: function() {
+      var lowCasedName = nameResolver.toLowerCaseWithoutSpec(this.props.variableName);
+      var clientlibs = lowCasedName + "libs";
+
+      this.log(clientlibs);
+
+
+
       if (this.props.dialog) {
         this.fs.copyTpl(
           this.templatePath('_dialog.xml'),
@@ -114,42 +116,42 @@ module.exports = yeoman.generators.Base.extend({
       if (this.props.css) {
         this.fs.copyTpl(
           this.templatePath('clientlibs/_css.txt'),
-          this.destinationPath(this.props.variableName + '/clientlibs/css.txt'), this.props
+          this.destinationPath(this.props.variableName + '/'+ clientlibs + '/css.txt'), this.props
         );
 
         this.fs.copyTpl(
           this.templatePath('clientlibs/css/_cmp_styles-main.css'),
-          this.destinationPath(this.props.variableName + '/clientlibs/css/' + this.props.name + '-main.css'), this.props
+          this.destinationPath(this.props.variableName + '/'+ clientlibs + '/css/' + this.props.name + '-main.css'), this.props
         );
       }
 
       if (this.props.javascripts) {
         this.fs.copyTpl(
           this.templatePath('clientlibs/_js.txt'),
-          this.destinationPath(this.props.variableName + '/clientlibs/js.txt'), this.props
+          this.destinationPath(this.props.variableName + '/'+ clientlibs + '/js.txt'), this.props
         );
 
 
         this.fs.copyTpl(
           this.templatePath('clientlibs/js/_cmp_js-preinit.js'),
-          this.destinationPath(this.props.variableName + '/clientlibs/js/' + this.props.name + '-preinit.js'), this.props
+          this.destinationPath(this.props.variableName + '/'+ clientlibs + '/js/' + this.props.name + '-preinit.js'), this.props
         );
 
         this.fs.copyTpl(
           this.templatePath('clientlibs/js/_cmp_js-init.js'),
-          this.destinationPath(this.props.variableName + '/clientlibs/js/' + this.props.name + '-init.js'), this.props
+          this.destinationPath(this.props.variableName + '/'+ clientlibs + '/js/' + this.props.name + '-init.js'), this.props
         );
 
         this.fs.copyTpl(
           this.templatePath('clientlibs/js/_cmp_js-controller.js'),
-          this.destinationPath(this.props.variableName + '/clientlibs/js/' + this.props.name + '-controller.js'), this.props
+          this.destinationPath(this.props.variableName + '/'+ clientlibs + '/js/' + this.props.name + '-controller.js'), this.props
         );
       }
 
       if (this.props.css || this.props.javascripts) {
         this.fs.copyTpl(
           this.templatePath('clientlibs/.content.xml'),
-          this.destinationPath(this.props.variableName + '/clientlibs/.content.xml'), this.props
+          this.destinationPath(this.props.variableName + '/'+ clientlibs + '/.content.xml'), this.props
         );
       }
 

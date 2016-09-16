@@ -15,7 +15,7 @@ var <%= jsVarsName%>Init = (function () {
 			elementSettings.el = el;
 
 			_.extend(elementSettings, settings);
-			new multTestController(elementSettings);
+			new <%= jsVarsName %>Controller(elementSettings);
 		});
 
 		// //Your code here!!!

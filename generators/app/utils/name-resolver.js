@@ -13,6 +13,9 @@ nameResolver.toCamel = function(label){
 	return label.replace(/(\-[a-z])/g, function($1){return $1.toUpperCase().replace('-','');});
 };
 
+nameResolver.toLowerCaseWithoutSpec = function(label) {
+	return label.replace(/(\-[a-z])/g, function($1){return $1.toLowerCase().replace('-','');});
+}
 
 nameResolver.toDash = function(label){
 	return label.replace(/([A-Z])/g, function($1){return "-"+$1.toLowerCase();});
