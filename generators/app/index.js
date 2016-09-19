@@ -97,10 +97,6 @@ module.exports = yeoman.generators.Base.extend({
       var lowCasedName = nameResolver.toLowerCaseWithoutSpec(this.props.variableName);
       var clientlibs = lowCasedName + "libs";
 
-      this.log(clientlibs);
-
-
-
       if (this.props.dialog) {
         this.fs.copyTpl(
           this.templatePath('_dialog.xml'),
@@ -110,6 +106,11 @@ module.exports = yeoman.generators.Base.extend({
         this.fs.copyTpl(
           this.templatePath('_cq_dialog/.content.xml'),
           this.destinationPath(this.props.variableName + "/_cq_dialog/.content.xml"), this.props
+        );
+
+        this.fs.copyTpl(
+          this.templatePath('_cq_template/.content.xml'),
+          this.destinationPath(this.props.variableName + '/_cq_template/.content.xml'), this.props
         );
       }
 
