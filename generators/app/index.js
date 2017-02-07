@@ -3,7 +3,7 @@
 var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var yosay = require('yosay');
-var nameResolver = require('./utils/name-resolver');
+var nameResolver = require('../utils/name-resolver');
 var _ = require('lodash');
 
 
