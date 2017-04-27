@@ -30,11 +30,11 @@ module.exports = yeoman.generators.Base.extend({
             name: 'cmppakage',
             choices: [
               {
-                name: 'jade',
+                name: 'pug',
                 checked: true
               },
               {
-                name: 'scss',
+                name: 'styl',
                 checked: true
               },
               {
@@ -54,12 +54,12 @@ module.exports = yeoman.generators.Base.extend({
             this.props.humanReadableName = _.capitalize(nameResolver.toHumanReadableName(this.props.name));// Some project
             this.props.varUnderName = nameResolver.toLowerUnderscore(this.props.name);//some_project
 
-            this.props.jade = true;
-            this.props.scss = true;
+            this.props.pug = true;
+            this.props.styl = true;
             this.props.javascripts = true;
 
-            if (!(_.includes(answers.cmppakage, 'jade'))) {this.props.jade = false}
-            if (!(_.includes(answers.cmppakage, 'scss'))) {this.props.scss = false}
+            if (!(_.includes(answers.cmppakage, 'pug'))) {this.props.pug = false}
+            if (!(_.includes(answers.cmppakage, 'styl'))) {this.props.styl = false}
             if (!(_.includes(answers.cmppakage, 'javascripts'))) {this.props.javascripts = false}
             // this.log(_a);
             done();
@@ -73,18 +73,6 @@ module.exports = yeoman.generators.Base.extend({
       var lowCasedName = nameResolver.toLowerCaseWithoutSpec(this.props.variableName);
       var clientlibs = lowCasedName + "libs";
 
-      // if (this.props.css) {
-      //   this.fs.copyTpl(
-      //     this.templatePath('clientlibs/_css.txt'),
-      //     this.destinationPath(this.props.variableName + '/'+ clientlibs + '/css.txt'), this.props
-      //   );
-
-      //   this.fs.copyTpl(
-      //     this.templatePath('clientlibs/css/_cmp_styles-main.css'),
-      //     this.destinationPath(this.props.variableName + '/'+ clientlibs + '/css/' + this.props.name + '-main.css'), this.props
-      //   );
-      // }
-
       if (this.props.javascripts) {
         this.fs.copyTpl(
           this.templatePath('js/_cmp_js-init.js'),
@@ -97,17 +85,17 @@ module.exports = yeoman.generators.Base.extend({
         );
       }
 
-      if (this.props.jade) {
+      if (this.props.pug) {
         this.fs.copyTpl(
-          this.templatePath('jade/cmp-tpl.jade'),
-          this.destinationPath('src/jade/components/' + '_cmp-' + this.props.name + '.jade'), this.props
+          this.templatePath('pug/cmp-tpl.pug'),
+          this.destinationPath('src/pug/components/' + '_cmp-' + this.props.name + '.pug'), this.props
         );
       }
 
-      if (this.props.scss) {
+      if (this.props.styl) {
         this.fs.copyTpl(
-          this.templatePath('scss/cmp-tpl.scss'),
-          this.destinationPath('src/styles/components/' + this.props.name + '.scss'), this.props
+          this.templatePath('styl/cmp-tpl.styl'),
+          this.destinationPath('src/styles/components/' + '_cmp-' + this.props.name + '.styl'), this.props
         );
       }
     },
