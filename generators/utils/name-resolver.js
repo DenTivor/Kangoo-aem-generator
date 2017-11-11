@@ -33,6 +33,11 @@ nameResolver.toHumanReadableName = function(label){
 	return label.replace(/(\-[a-z])/g, function($1){return $1.replace('-',' ');});
 };
 
+nameResolver.toClassName = function(label){
+    var camelized = this.toCamel(label);
+    return camelized.charAt(0).toUpperCase() + camelized.slice(1);
+};
+
 module.exports = nameResolver;
 
 

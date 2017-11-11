@@ -53,6 +53,7 @@ module.exports = yeoman.generators.Base.extend({
             this.props.jsVarsName = nameResolver.toCamel(this.props.name); // -> someProject
             this.props.humanReadableName = _.capitalize(nameResolver.toHumanReadableName(this.props.name));// Some project
             this.props.varUnderName = nameResolver.toLowerUnderscore(this.props.name);//some_project
+            this.props.className = nameResolver.toClassName(this.props.name); // SomeProject
 
             this.props.pug = true;
             this.props.styl = true;

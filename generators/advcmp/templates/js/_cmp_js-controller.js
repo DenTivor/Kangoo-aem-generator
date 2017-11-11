@@ -1,5 +1,5 @@
 define(["jquery","underscore", "components/basicComponent"], function($, _, BasicComponent) {
-    var <%= jsVarsName%> = (function(){
+    var <%= className%> = (function(){
         function controller(settings) {
             _.extend(this, new BasicComponent(settings));
             this.init();
@@ -29,5 +29,5 @@ define(["jquery","underscore", "components/basicComponent"], function($, _, Basi
         return controller;
     })();
 
-    return <%= jsVarsName%>;
+    return <%= className%>;
 });

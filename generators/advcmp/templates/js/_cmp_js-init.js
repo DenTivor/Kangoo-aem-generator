@@ -1,4 +1,4 @@
-define(["jquery","underscore", "components/<%= name%>/<%= name%>-controller"], function($, _, <%= jsVarsName%>Controller) {
+define(["jquery","underscore", "components/<%= name%>/<%= name%>-controller"], function($, _, <%= className%>Controller) {
 
     var settings = {
        elSelector: ".<%= name%>[element-id='<%= name%>']",
@@ -9,7 +9,7 @@ define(["jquery","underscore", "components/<%= name%>/<%= name%>-controller"], f
 
     _.each(els, function(el) {
         elSettings.el = $(el);
-        new <%= jsVarsName%>Controller(settings);
+        new <%= className%>Controller(settings);
     })
 
 });
