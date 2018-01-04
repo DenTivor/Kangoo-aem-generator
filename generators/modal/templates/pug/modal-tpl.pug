@@ -1,0 +1,11 @@
+.<%= variableName %>(element-id='<%= variableName %>' view-type='<%= viewType %>')
+	.modal.fade(tabindex="-1", role="dialog" )
+		.modal-dialog.modal-lg(role="document")
+			.modal-content
+				.modal-header
+					h4.modal-title <%= humanReadableName %> title
+				.modal-body
+					p One fine body…
+				.modal-footer
+					button.btn.btn-default(type="button", data-dismiss="modal") Close
+					button.btn.btn-primary(type="button") Accept
