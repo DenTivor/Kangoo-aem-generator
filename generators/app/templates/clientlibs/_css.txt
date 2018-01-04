@@ -1,2 +1,0 @@
-#base=css
-<%= variableName%>-main.css

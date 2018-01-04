@@ -1,4 +1,0 @@
-#base=js
-<%= variableName%>-controller.js
-<%= variableName%>-init.js
-<%= variableName%>-preinit.js

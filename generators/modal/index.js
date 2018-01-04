@@ -6,6 +6,8 @@ var yosay = require('yosay');
 var nameResolver = require('../utils/name-resolver');
 var _ = require('lodash');
 
+var VIEW_TYPE = "modal";
+var VIEW_TYPE_POSTFIX = "-modal";
 
 module.exports = yeoman.generators.Base.extend({
   writing: {
@@ -20,7 +22,7 @@ module.exports = yeoman.generators.Base.extend({
         var prompts = [{
             type: 'input',
             name: 'name',
-            message: 'Adventourer: Your component name',
+            message: 'Adventourer: Your modal component name',
             //Defaults to the project's folder name if the input is skipped
             default: this.appname
         },
@@ -49,11 +51,12 @@ module.exports = yeoman.generators.Base.extend({
         this.prompt(prompts, function (answers) {
             this.props = answers;
 
-            this.props.variableName = this.props.name; // -> some-project
-            this.props.jsVarsName = nameResolver.toCamel(this.props.name); // -> someProject
-            this.props.humanReadableName = _.capitalize(nameResolver.toHumanReadableName(this.props.name));// Some project
-            this.props.varUnderName = nameResolver.toLowerUnderscore(this.props.name);//some_project
-            this.props.className = nameResolver.toClassName(this.props.name); // SomeProject
+            this.props.viewType = VIEW_TYPE;
+            this.props.variableName = this.props.name + VIEW_TYPE_POSTFIX; // -> some-project-modal
+            this.props.jsVarsName = nameResolver.toCamel(this.props.variableName); // -> someProjectModal
+            this.props.humanReadableName = _.capitalize(nameResolver.toHumanReadableName(this.props.variableName));// Some project modal
+            this.props.varUnderName = nameResolver.toLowerUnderscore(this.props.variableName);//some_project_modal
+            this.props.className = nameResolver.toClassName(this.props.variableName); // SomeProjectModal
 
             this.props.pug = true;
             this.props.styl = true;
@@ -76,27 +79,27 @@ module.exports = yeoman.generators.Base.extend({
 
       if (this.props.javascripts) {
         this.fs.copyTpl(
-          this.templatePath('js/_cmp_js-init.js'),
-          this.destinationPath('src/scripts/components/' + this.props.name + "/" + this.props.name + '-init.js'), this.props
+          this.templatePath('js/_modal_js-init.js'),
+          this.destinationPath('src/scripts/components/' + this.props.variableName + "/" + this.props.variableName + '-init.js'), this.props
         );
 
         this.fs.copyTpl(
-          this.templatePath('js/_cmp_js-controller.js'),
-          this.destinationPath('src/scripts/components/' + this.props.name + "/" + this.props.name + '-controller.js'), this.props
+          this.templatePath('js/_modal_js-controller.js'),
+          this.destinationPath('src/scripts/components/' + this.props.variableName + "/" + this.props.variableName + '-controller.js'), this.props
         );
       }
 
       if (this.props.pug) {
         this.fs.copyTpl(
-          this.templatePath('pug/cmp-tpl.pug'),
-          this.destinationPath('src/pug/components/' + '_cmp-' + this.props.name + '.pug'), this.props
+          this.templatePath('pug/modal-tpl.pug'),
+          this.destinationPath('src/pug/components/' + '_cmp-' + this.props.variableName + '.pug'), this.props
         );
       }
 
       if (this.props.styl) {
         this.fs.copyTpl(
-          this.templatePath('styl/cmp-tpl.styl'),
-          this.destinationPath('src/styles/components/' + '_cmp-' + this.props.name + '.styl'), this.props
+          this.templatePath('styl/modal-tpl.styl'),
+          this.destinationPath('src/styles/components/' + '_cmp-' + this.props.variableName + '.styl'), this.props
         );
       }
     },
