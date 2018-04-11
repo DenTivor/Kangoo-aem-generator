@@ -1,4 +1,19 @@
 define(["jquery","underscore", "components/modalBasicComponent"], function($, _, ModalBasicComponent) {
+    var <%= className%>Component = (function(){
+        function controller() {
+            var settings = {
+                elSelector: ".<%= variableName%>[element-id='<%= variableName%>'][view-type='modal']",
+            };
+            
+            ObjectUtils.elementComponentFactory(settings, <%= className%>);
+        }
+        return controller;
+    })();
+
+
+
+
+
     var <%= className%> = (function(){
         function controller(settings) {
             _.extend(this, new ModalBasicComponent(settings));
@@ -7,7 +22,7 @@ define(["jquery","underscore", "components/modalBasicComponent"], function($, _,
 
 
         controller.prototype.init = function(){
-            console.log("<%= humanReadableName%> controller init");
+            console.log("<%= humanReadableName%> modal controller init");
             this.bindHandlers();
         }
 
@@ -29,5 +44,5 @@ define(["jquery","underscore", "components/modalBasicComponent"], function($, _,
         return controller;
     })();
 
-    return <%= className%>;
+    return <%= className%>Component;
 });

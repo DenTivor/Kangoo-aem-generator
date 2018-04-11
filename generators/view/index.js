@@ -76,13 +76,8 @@ module.exports = yeoman.generators.Base.extend({
 
       if (this.props.javascripts) {
         this.fs.copyTpl(
-          this.templatePath('js/_cmp_js-init.js'),
-          this.destinationPath('src/scripts/components/' + this.props.variableName + "/" + this.props.variableName + '-init.js'), this.props
-        );
-
-        this.fs.copyTpl(
-          this.templatePath('js/_cmp_js-controller.js'),
-          this.destinationPath('src/scripts/components/' + this.props.variableName + "/" + this.props.variableName + '-controller.js'), this.props
+          this.templatePath('js/_cmp_js-component.js'),
+          this.destinationPath('src/scripts/components/' + '_cmp-' + this.props.variableName + '.js'), this.props
         );
       }
 
